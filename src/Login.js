@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Login.css';
 
 
-function Login() {
+function Login({ onLoginSuccess }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -12,7 +12,10 @@ function Login() {
     // Simulação de login
     if (email === 'lzmendestechdev@gmail.com' && password === '123456') {
       setError('');
-      alert('Login realizado com sucesso!');
+      // Chama a função de callback passando os dados do usuário
+      if (onLoginSuccess) {
+        onLoginSuccess({ email, name: 'Luiz Felipe' });
+      }
     } else {
       setError('Email ou senha inválidos.');
     }
