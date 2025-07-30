@@ -10,7 +10,7 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Simulação de login
-    if (email === 'admin@empresa.com' && password === '123456') {
+    if (email === 'lzmendestechdev@gmail.com' && password === '123456') {
       setError('');
       alert('Login realizado com sucesso!');
     } else {

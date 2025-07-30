@@ -1,9 +1,14 @@
 import './App.css';
-import Login from './Login';
-
 
 function App() {
-  return <Login />;
+  const name = 'Luiz Felipe'
+
+  return (
+    <div className="App">
+      <h1>Mexendo teste</h1>
+      <p>Olá, {name} </p>
+    </div>
+  );
 }
 
 export default App;
