@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
 
-const Dashboard = () => {
+const Dashboard = ({ user, onLogout }) => {
   const navigate = useNavigate();
 
   // Mock data for 14 vehicles
@@ -35,6 +35,12 @@ const Dashboard = () => {
           <span className="logo-text">Obracon</span>
         </div>
         <h1 className="dashboard-title">Checklist Diário de Veículos</h1>
+        <div className="user-info">
+          <span className="welcome-text">Bem-vindo, {user?.name || 'Usuário'}!</span>
+          <button className="logout-button" onClick={onLogout}>
+            Sair
+          </button>
+        </div>
       </header>
 
       <main className="dashboard-main">

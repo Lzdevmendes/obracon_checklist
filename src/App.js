@@ -29,7 +29,7 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<Dashboard user={user} onLogout={handleLogout} />} />
           <Route path="/checklist-passoapasso" element={<ChecklistPassoAPasso />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
