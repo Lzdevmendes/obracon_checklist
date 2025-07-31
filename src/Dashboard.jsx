@@ -5,9 +5,8 @@ import './Dashboard.css';
 const Dashboard = ({ user, onLogout }) => {
   const navigate = useNavigate();
 
-  // Mock data for 14 vehicles
   const vehicles = [
-    { id: 1, veiculo: 'Fiat Uno', placa: 'ABC-1234', status: 'Funcionando', revisao: '15/01/2025' },
+    { id: 1, veiculo: 'Saveiro Simples', placa: 'SUX-19E4', status: 'Funcionando', revisao: '15/01/2025' },
     { id: 2, veiculo: 'Volkswagen Gol', placa: 'DEF-5678', status: 'Funcionando', revisao: '20/01/2025' },
     { id: 3, veiculo: 'Chevrolet Onix', placa: 'GHI-9012', status: 'Manutenção', revisao: '10/02/2025' },
     { id: 4, veiculo: 'Ford Ka', placa: 'JKL-3456', status: 'Funcionando', revisao: '25/01/2025' },
@@ -32,7 +31,7 @@ const Dashboard = ({ user, onLogout }) => {
       <header className="dashboard-header">
         <div className="logo">
           <img src="/logo192.png" alt="Logo" className="logo-image" />
-          <span className="logo-text">Obracon</span>
+          <span className="logo-text">Obracon - Veículos</span>
         </div>
         <h1 className="dashboard-title">Checklist Diário de Veículos</h1>
         <div className="user-info">
