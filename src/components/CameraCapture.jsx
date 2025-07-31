@@ -9,6 +9,16 @@ const CameraCapture = ({ onPhotoCapture, onClose }) => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
+  useEffect(() => {
+    startCamera();
+    return () => {
+      // Função de cleanup inline para evitar dependências
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const stopCamera = useCallback(() => {
     if (stream) {
       stream.getTracks().forEach(track => track.stop());
@@ -16,17 +26,15 @@ const CameraCapture = ({ onPhotoCapture, onClose }) => {
     }
   }, [stream]);
 
-  useEffect(() => {
-    startCamera();
-    return () => {
-      stopCamera();
-    };
-  }, [stopCamera]);
-
   const startCamera = async () => {
     try {
       setIsLoading(true);
       setError(null);
+      
+      // Para a câmera anterior se existir
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
       
       const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: {
@@ -39,8 +47,13 @@ const CameraCapture = ({ onPhotoCapture, onClose }) => {
       setStream(mediaStream);
       if (videoRef.current) {
         videoRef.current.srcObject = mediaStream;
+        // Aguarda o vídeo carregar antes de remover o loading
+        videoRef.current.onloadedmetadata = () => {
+          setIsLoading(false);
+        };
+      } else {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     } catch (err) {
       console.error('Erro ao acessar a câmera:', err);
       setError('Não foi possível acessar a câmera. Verifique as permissões.');
@@ -80,6 +93,7 @@ const CameraCapture = ({ onPhotoCapture, onClose }) => {
 
   const handleClose = () => {
     stopCamera();
+    setCapturedPhoto(null); // Limpa a foto capturada
     if (onClose) {
       onClose();
     }

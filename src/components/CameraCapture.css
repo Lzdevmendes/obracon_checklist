@@ -79,13 +79,17 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: hidden; /* Previne scroll indesejado */
 }
 
 .camera-video {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  max-width: 100%;
   max-height: calc(100vh - 200px);
+  object-fit: cover;
+  transform: translateZ(0); /* Força aceleração de hardware */
+  will-change: transform; /* Otimiza para mudanças */
 }
 
 .dashboard-overlay {
@@ -104,6 +108,7 @@
   width: 100%;
   height: auto;
   filter: drop-shadow(0 0 5px rgba(0, 255, 0, 0.8));
+  transform: translateZ(0); /* Força aceleração de hardware */
 }
 
 .camera-controls {

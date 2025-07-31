@@ -1,7 +1,7 @@
 
 .checklist-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
   padding: 20px;
 }
 
@@ -91,7 +91,7 @@
 }
 
 .btn-camera {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
   border: none;
   padding: 12px 24px;
   border-radius: 10px;
@@ -103,7 +103,7 @@
 
 .btn-camera:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 5px 15px rgba(30, 60, 114, 0.4);
 }
 
 .photo-preview {

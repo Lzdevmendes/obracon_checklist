@@ -12,15 +12,19 @@ const ChecklistPassoAPasso = () => {
   const [capturedPhoto, setCapturedPhoto] = useState(null);
   const [checklistData, setChecklistData] = useState({
     placa: '',
-    dataHora: new Date().toISOString().slice(0, 16), // formato datetime-local
+    dataHora: (() => {
+      const now = new Date();
+      // Ajusta para o fuso horário do Brasil (UTC-3)
+      const brasilTime = new Date(now.getTime() - (3 * 60 * 60 * 1000));
+      return brasilTime.toISOString().slice(0, 16);
+    })(),
     observacoes: '',
     itensVerificados: {
-      painelFuncionando: false,
-      luzesIndicadoras: false,
-      velocimetro: false,
-      tacometro: false,
-      combustivel: false,
-      temperatura: false
+      carcaca: false,
+      luzesGerais: false,
+      pneus: false,
+      cacamba: false,
+      nivelGasolina: false
     }
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -154,6 +158,9 @@ const ChecklistPassoAPasso = () => {
               onChange={(e) => handleInputChange('dataHora', e.target.value)}
               required
             />
+            <small style={{ color: '#666', fontSize: '12px', marginTop: '4px', display: 'block' }}>
+              📅 Data e hora atual do Brasil automaticamente preenchidas
+            </small>
           </div>
 
           <div className="form-group">
@@ -176,55 +183,46 @@ const ChecklistPassoAPasso = () => {
             <label className="checkbox-item">
               <input
                 type="checkbox"
-                checked={checklistData.itensVerificados.painelFuncionando}
-                onChange={(e) => handleCheckboxChange('painelFuncionando', e.target.checked)}
+                checked={checklistData.itensVerificados.carcaca}
+                onChange={(e) => handleCheckboxChange('carcaca', e.target.checked)}
               />
-              <span>Painel funcionando corretamente</span>
+              <span>🚗 Carcaça - Verificar se não há amassados</span>
             </label>
 
             <label className="checkbox-item">
               <input
                 type="checkbox"
-                checked={checklistData.itensVerificados.luzesIndicadoras}
-                onChange={(e) => handleCheckboxChange('luzesIndicadoras', e.target.checked)}
+                checked={checklistData.itensVerificados.luzesGerais}
+                onChange={(e) => handleCheckboxChange('luzesGerais', e.target.checked)}
               />
-              <span>Luzes indicadoras funcionando</span>
+              <span>💡 Luzes em geral - Funcionamento adequado</span>
             </label>
 
             <label className="checkbox-item">
               <input
                 type="checkbox"
-                checked={checklistData.itensVerificados.velocimetro}
-                onChange={(e) => handleCheckboxChange('velocimetro', e.target.checked)}
+                checked={checklistData.itensVerificados.pneus}
+                onChange={(e) => handleCheckboxChange('pneus', e.target.checked)}
               />
-              <span>Velocímetro funcionando</span>
+              <span>🛞 Pneus - Saúde e calibragem adequadas</span>
             </label>
 
             <label className="checkbox-item">
               <input
                 type="checkbox"
-                checked={checklistData.itensVerificados.tacometro}
-                onChange={(e) => handleCheckboxChange('tacometro', e.target.checked)}
+                checked={checklistData.itensVerificados.cacamba}
+                onChange={(e) => handleCheckboxChange('cacamba', e.target.checked)}
               />
-              <span>Tacômetro funcionando</span>
+              <span>📦 Caçamba - Sem objetos que coloquem a viagem em risco</span>
             </label>
 
             <label className="checkbox-item">
               <input
                 type="checkbox"
-                checked={checklistData.itensVerificados.combustivel}
-                onChange={(e) => handleCheckboxChange('combustivel', e.target.checked)}
+                checked={checklistData.itensVerificados.nivelGasolina}
+                onChange={(e) => handleCheckboxChange('nivelGasolina', e.target.checked)}
               />
-              <span>Indicador de combustível funcionando</span>
-            </label>
-
-            <label className="checkbox-item">
-              <input
-                type="checkbox"
-                checked={checklistData.itensVerificados.temperatura}
-                onChange={(e) => handleCheckboxChange('temperatura', e.target.checked)}
-              />
-              <span>Indicador de temperatura funcionando</span>
+              <span>⛽ Nível de gasolina - Suficiente, não necessita abastecimento</span>
             </label>
           </div>
         </div>
