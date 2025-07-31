@@ -22,15 +22,23 @@ const COLLECTION_NAME = 'checklists';
  */
 export const saveChecklist = async (checklistData) => {
   try {
-    let photoURL = null;
+    const photoURLs = {};
     
-    // Se há uma foto, fazer upload para o Storage
-    if (checklistData.foto) {
-      const photoRef = ref(storage, `checklist-photos/${Date.now()}_${checklistData.placa}.jpg`);
+    // Se há fotos, fazer upload para o Storage
+    if (checklistData.fotos) {
+      const timestamp = Date.now();
+      const placa = checklistData.placa;
       
-      // Upload da foto (base64) para o Storage
-      const snapshot = await uploadString(photoRef, checklistData.foto, 'data_url');
-      photoURL = await getDownloadURL(snapshot.ref);
+      // Upload de cada foto
+      for (const [photoType, photoData] of Object.entries(checklistData.fotos)) {
+        if (photoData) {
+          const photoRef = ref(storage, `checklist-photos/${timestamp}_${placa}_${photoType}.jpg`);
+          
+          // Upload da foto (base64) para o Storage
+          const snapshot = await uploadString(photoRef, photoData, 'data_url');
+          photoURLs[photoType] = await getDownloadURL(snapshot.ref);
+        }
+      }
     }
     
     // Preparar dados para salvar no Firestore
@@ -40,7 +48,7 @@ export const saveChecklist = async (checklistData) => {
       dataHora: checklistData.dataHora,
       observacoes: checklistData.observacoes,
       itensVerificados: checklistData.itensVerificados,
-      fotoURL: photoURL, // URL da foto no Storage
+      fotosURLs: photoURLs, // URLs das fotos no Storage
       timestamp: serverTimestamp(), // Timestamp do servidor
       createdAt: new Date().toISOString() // Timestamp local para backup
     };

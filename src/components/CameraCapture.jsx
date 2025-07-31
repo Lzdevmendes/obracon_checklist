@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import './CameraCapture.css';
 
-const CameraCapture = ({ onPhotoCapture, onClose }) => {
+const CameraCapture = ({ photoType, photoLabel, onPhotoCapture, onClose }) => {
   const [stream, setStream] = useState(null);
   const [capturedPhoto, setCapturedPhoto] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -99,6 +99,89 @@ const CameraCapture = ({ onPhotoCapture, onClose }) => {
     }
   };
 
+  const renderPhotoOverlay = (type) => {
+    const overlayProps = {
+      viewBox: "0 0 400 300",
+      className: "photo-outline",
+      xmlns: "http://www.w3.org/2000/svg"
+    };
+
+    switch (type) {
+      case 'painel':
+        return (
+          <svg {...overlayProps}>
+            <rect x="50" y="80" width="300" height="140" rx="20" ry="20" fill="none" stroke="#00ff00" strokeWidth="3" strokeDasharray="10,5" />
+            <circle cx="120" cy="150" r="35" fill="none" stroke="#00ff00" strokeWidth="2" strokeDasharray="5,3" />
+            <circle cx="280" cy="150" r="35" fill="none" stroke="#00ff00" strokeWidth="2" strokeDasharray="5,3" />
+            <rect x="180" y="130" width="40" height="40" rx="5" ry="5" fill="none" stroke="#00ff00" strokeWidth="2" strokeDasharray="3,2" />
+            <text x="200" y="50" textAnchor="middle" fill="#00ff00" fontSize="14" fontWeight="bold">
+              Alinhe o painel dentro desta área
+            </text>
+          </svg>
+        );
+      
+      case 'frontal':
+        return (
+          <svg {...overlayProps}>
+            <rect x="80" y="60" width="240" height="180" rx="15" ry="15" fill="none" stroke="#00ff00" strokeWidth="3" strokeDasharray="10,5" />
+            <rect x="140" y="80" width="120" height="20" rx="5" ry="5" fill="none" stroke="#00ff00" strokeWidth="2" strokeDasharray="5,3" />
+            <circle cx="120" cy="200" r="25" fill="none" stroke="#00ff00" strokeWidth="2" strokeDasharray="5,3" />
+            <circle cx="280" cy="200" r="25" fill="none" stroke="#00ff00" strokeWidth="2" strokeDasharray="5,3" />
+            <text x="200" y="40" textAnchor="middle" fill="#00ff00" fontSize="14" fontWeight="bold">
+              Capture a parte frontal do veículo
+            </text>
+          </svg>
+        );
+      
+      case 'lateralDireita':
+        return (
+          <svg {...overlayProps}>
+            <rect x="40" y="80" width="320" height="140" rx="20" ry="20" fill="none" stroke="#00ff00" strokeWidth="3" strokeDasharray="10,5" />
+            <circle cx="100" cy="200" r="20" fill="none" stroke="#00ff00" strokeWidth="2" strokeDasharray="5,3" />
+            <circle cx="300" cy="200" r="20" fill="none" stroke="#00ff00" strokeWidth="2" strokeDasharray="5,3" />
+            <text x="200" y="50" textAnchor="middle" fill="#00ff00" fontSize="14" fontWeight="bold">
+              Capture a lateral direita do veículo
+            </text>
+          </svg>
+        );
+      
+      case 'lateralEsquerda':
+        return (
+          <svg {...overlayProps}>
+            <rect x="40" y="80" width="320" height="140" rx="20" ry="20" fill="none" stroke="#00ff00" strokeWidth="3" strokeDasharray="10,5" />
+            <circle cx="100" cy="200" r="20" fill="none" stroke="#00ff00" strokeWidth="2" strokeDasharray="5,3" />
+            <circle cx="300" cy="200" r="20" fill="none" stroke="#00ff00" strokeWidth="2" strokeDasharray="5,3" />
+            <text x="200" y="50" textAnchor="middle" fill="#00ff00" fontSize="14" fontWeight="bold">
+              Capture a lateral esquerda do veículo
+            </text>
+          </svg>
+        );
+      
+      case 'traseira':
+        return (
+          <svg {...overlayProps}>
+            <rect x="80" y="60" width="240" height="180" rx="15" ry="15" fill="none" stroke="#00ff00" strokeWidth="3" strokeDasharray="10,5" />
+            <rect x="140" y="200" width="120" height="20" rx="5" ry="5" fill="none" stroke="#00ff00" strokeWidth="2" strokeDasharray="5,3" />
+            <circle cx="120" cy="200" r="25" fill="none" stroke="#00ff00" strokeWidth="2" strokeDasharray="5,3" />
+            <circle cx="280" cy="200" r="25" fill="none" stroke="#00ff00" strokeWidth="2" strokeDasharray="5,3" />
+            <text x="200" y="40" textAnchor="middle" fill="#00ff00" fontSize="14" fontWeight="bold">
+              Capture a parte traseira do veículo
+            </text>
+          </svg>
+        );
+      
+      default:
+        return (
+          <svg {...overlayProps}>
+            <rect x="60" y="60" width="280" height="180" rx="15" ry="15" fill="none" stroke="#00ff00" strokeWidth="3" strokeDasharray="10,5" />
+            <text x="200" y="40" textAnchor="middle" fill="#00ff00" fontSize="14" fontWeight="bold">
+              Posicione o veículo dentro da área
+            </text>
+          </svg>
+        );
+    }
+  };
+
   if (error) {
     return (
       <div className="camera-container">
@@ -116,7 +199,7 @@ const CameraCapture = ({ onPhotoCapture, onClose }) => {
   return (
     <div className="camera-container">
       <div className="camera-header">
-        <h3>Capturar Foto do Painel</h3>
+        <h3>Capturar Foto - {photoLabel || 'Veículo'}</h3>
         <button onClick={handleClose} className="btn-close">
           ✕
         </button>
@@ -139,75 +222,9 @@ const CameraCapture = ({ onPhotoCapture, onClose }) => {
               className="camera-video"
             />
             
-            {/* Overlay do painel de instrumentos */}
-            <div className="dashboard-overlay">
-              <svg
-                viewBox="0 0 400 300"
-                className="dashboard-outline"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                {/* Contorno do painel principal */}
-                <rect
-                  x="50"
-                  y="80"
-                  width="300"
-                  height="140"
-                  rx="20"
-                  ry="20"
-                  fill="none"
-                  stroke="#00ff00"
-                  strokeWidth="3"
-                  strokeDasharray="10,5"
-                />
-                
-                {/* Círculo do velocímetro */}
-                <circle
-                  cx="120"
-                  cy="150"
-                  r="35"
-                  fill="none"
-                  stroke="#00ff00"
-                  strokeWidth="2"
-                  strokeDasharray="5,3"
-                />
-                
-                {/* Círculo do tacômetro */}
-                <circle
-                  cx="280"
-                  cy="150"
-                  r="35"
-                  fill="none"
-                  stroke="#00ff00"
-                  strokeWidth="2"
-                  strokeDasharray="5,3"
-                />
-                
-                {/* Display central */}
-                <rect
-                  x="180"
-                  y="130"
-                  width="40"
-                  height="40"
-                  rx="5"
-                  ry="5"
-                  fill="none"
-                  stroke="#00ff00"
-                  strokeWidth="2"
-                  strokeDasharray="3,2"
-                />
-                
-                {/* Texto de instrução */}
-                <text
-                  x="200"
-                  y="50"
-                  textAnchor="middle"
-                  fill="#00ff00"
-                  fontSize="14"
-                  fontWeight="bold"
-                >
-                  Alinhe o painel dentro desta área
-                </text>
-              </svg>
+            {/* Overlay específico para cada tipo de foto */}
+            <div className="photo-overlay">
+              {renderPhotoOverlay(photoType)}
             </div>
 
             <div className="camera-controls">

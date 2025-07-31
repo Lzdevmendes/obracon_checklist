@@ -10,7 +10,14 @@ const ChecklistPassoAPasso = () => {
   const vehicleId = location.state?.vehicleId;
   
   const [showCamera, setShowCamera] = useState(false);
-  const [capturedPhoto, setCapturedPhoto] = useState(null);
+  const [currentPhotoType, setCurrentPhotoType] = useState(null);
+  const [capturedPhotos, setCapturedPhotos] = useState({
+    painel: null,
+    frontal: null,
+    lateralDireita: null,
+    lateralEsquerda: null,
+    traseira: null
+  });
   const [checklistData, setChecklistData] = useState({
     placa: '',
     dataHora: (() => {
@@ -47,14 +54,35 @@ const ChecklistPassoAPasso = () => {
     }));
   };
 
+  const photoTypes = [
+    { key: 'painel', label: 'Painel de Instrumentos', icon: '📊' },
+    { key: 'frontal', label: 'Parte Frontal', icon: '🚗' },
+    { key: 'lateralDireita', label: 'Lateral Direita', icon: '➡️' },
+    { key: 'lateralEsquerda', label: 'Lateral Esquerda', icon: '⬅️' },
+    { key: 'traseira', label: 'Parte Traseira', icon: '🔙' }
+  ];
+
   const handlePhotoCapture = (photoDataUrl) => {
-    setCapturedPhoto(photoDataUrl);
+    if (currentPhotoType) {
+      setCapturedPhotos(prev => ({
+        ...prev,
+        [currentPhotoType]: photoDataUrl
+      }));
+    }
     setShowCamera(false);
+    setCurrentPhotoType(null);
+  };
+
+  const openCamera = (photoType) => {
+    setCurrentPhotoType(photoType);
+    setShowCamera(true);
   };
 
   const handleSubmitChecklist = async () => {
-    if (!capturedPhoto) {
-      alert('Por favor, capture uma foto do painel antes de enviar.');
+    // Verificar se todas as fotos foram capturadas
+    const missingPhotos = photoTypes.filter(type => !capturedPhotos[type.key]);
+    if (missingPhotos.length > 0) {
+      alert(`Por favor, capture as seguintes fotos: ${missingPhotos.map(p => p.label).join(', ')}`);
       return;
     }
 
@@ -70,7 +98,7 @@ const ChecklistPassoAPasso = () => {
       const checklistCompleto = {
         vehicleId,
         ...checklistData,
-        foto: capturedPhoto,
+        fotos: capturedPhotos,
         timestamp: new Date().toISOString()
       };
 
@@ -108,30 +136,51 @@ const ChecklistPassoAPasso = () => {
           <h2>Veículo ID: {vehicleId || 'Não especificado'}</h2>
         </div>
 
-        {/* Seção de captura de foto */}
-        <div className="photo-section">
-          <h3>📷 Foto do Painel de Instrumentos</h3>
-          {!capturedPhoto ? (
-            <div className="photo-placeholder">
-              <p>Nenhuma foto capturada</p>
-              <button 
-                onClick={() => setShowCamera(true)}
-                className="btn-camera"
-              >
-                📱 Abrir Câmera
-              </button>
-            </div>
-          ) : (
-            <div className="photo-preview">
-              <img src={capturedPhoto} alt="Painel capturado" className="captured-photo" />
-              <button 
-                onClick={() => setShowCamera(true)}
-                className="btn-retake-small"
-              >
-                🔄 Tirar Nova Foto
-              </button>
-            </div>
-          )}
+        {/* Seção de captura de fotos */}
+        <div className="photos-section">
+          <h3>📷 Fotos do Veículo</h3>
+          <p className="photos-instruction">Capture fotos de todas as partes do veículo:</p>
+          
+          <div className="photos-grid">
+            {photoTypes.map((photoType) => (
+              <div key={photoType.key} className="photo-item">
+                <div className="photo-header">
+                  <span className="photo-icon">{photoType.icon}</span>
+                  <span className="photo-label">{photoType.label}</span>
+                </div>
+                
+                {!capturedPhotos[photoType.key] ? (
+                  <div className="photo-placeholder">
+                    <p>Nenhuma foto</p>
+                    <button
+                      onClick={() => openCamera(photoType.key)}
+                      className="btn-camera-small"
+                    >
+                      📱 Capturar
+                    </button>
+                  </div>
+                ) : (
+                  <div className="photo-preview-small">
+                    <img
+                      src={capturedPhotos[photoType.key]}
+                      alt={`${photoType.label} capturada`}
+                      className="captured-photo-small"
+                    />
+                    <button
+                      onClick={() => openCamera(photoType.key)}
+                      className="btn-retake-tiny"
+                    >
+                      🔄
+                    </button>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+          
+          <div className="photos-progress">
+            <span>Progresso: {Object.values(capturedPhotos).filter(Boolean).length}/{photoTypes.length} fotos</span>
+          </div>
         </div>
 
         {/* Formulário de dados básicos */}
@@ -242,10 +291,15 @@ const ChecklistPassoAPasso = () => {
       </div>
 
       {/* Modal da câmera */}
-      {showCamera && (
+      {showCamera && currentPhotoType && (
         <CameraCapture
+          photoType={currentPhotoType}
+          photoLabel={photoTypes.find(p => p.key === currentPhotoType)?.label}
           onPhotoCapture={handlePhotoCapture}
-          onClose={() => setShowCamera(false)}
+          onClose={() => {
+            setShowCamera(false);
+            setCurrentPhotoType(null);
+          }}
         />
       )}
     </div>

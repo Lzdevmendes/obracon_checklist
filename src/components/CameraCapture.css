@@ -92,6 +92,25 @@
   will-change: transform; /* Otimiza para mudanças */
 }
 
+.photo-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 400px;
+  height: auto;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.photo-outline {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 5px rgba(0, 255, 0, 0.8));
+  transform: translateZ(0); /* Força aceleração de hardware */
+}
+
 .dashboard-overlay {
   position: absolute;
   top: 50%;
@@ -220,6 +239,7 @@
     font-size: 1rem;
   }
   
+  .photo-overlay,
   .dashboard-overlay {
     width: 90%;
   }
@@ -255,6 +275,7 @@
     flex-direction: column;
   }
   
+  .photo-overlay,
   .dashboard-overlay {
     width: 60%;
   }

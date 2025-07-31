@@ -60,6 +60,140 @@
   font-size: 20px;
 }
 
+.photos-section {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.photos-section h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.photos-instruction {
+  margin: 0 0 20px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.photos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.photo-item {
+  border: 2px solid #e1e5e9;
+  border-radius: 10px;
+  padding: 15px;
+  background: #f8f9fa;
+  transition: all 0.3s ease;
+}
+
+.photo-item:hover {
+  border-color: #667eea;
+  transform: translateY(-2px);
+}
+
+.photo-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.photo-icon {
+  font-size: 18px;
+}
+
+.photo-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.photo-placeholder {
+  text-align: center;
+  padding: 20px;
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  background: white;
+}
+
+.photo-placeholder p {
+  margin: 0 0 10px 0;
+  color: #666;
+  font-size: 12px;
+}
+
+.btn-camera-small {
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-camera-small:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(30, 60, 114, 0.4);
+}
+
+.photo-preview-small {
+  position: relative;
+  text-align: center;
+}
+
+.captured-photo-small {
+  width: 100%;
+  max-height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-retake-tiny {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: rgba(255, 107, 107, 0.9);
+  border: none;
+  padding: 4px 6px;
+  border-radius: 4px;
+  color: white;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-retake-tiny:hover {
+  background: rgba(255, 82, 82, 0.9);
+}
+
+.photos-progress {
+  text-align: center;
+  padding: 15px;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.photos-progress span {
+  color: #667eea;
+  font-weight: 500;
+  font-size: 14px;
+}
+
 .photo-section {
   background: rgba(255, 255, 255, 0.95);
   padding: 25px;
@@ -290,11 +424,25 @@
     font-size: 24px;
   }
   
+  .photos-section,
   .photo-section,
   .form-section,
   .checklist-items,
   .submit-section {
     padding: 20px;
+  }
+  
+  .photos-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+  }
+  
+  .photo-item {
+    padding: 10px;
+  }
+  
+  .captured-photo-small {
+    max-height: 80px;
   }
   
   .checkbox-item {
@@ -313,11 +461,34 @@
     padding: 10px;
   }
   
+  .photos-section,
   .photo-section,
   .form-section,
   .checklist-items,
   .submit-section {
     padding: 15px;
+  }
+  
+  .photos-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .photo-item {
+    padding: 8px;
+  }
+  
+  .photo-label {
+    font-size: 12px;
+  }
+  
+  .btn-camera-small {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+  
+  .captured-photo-small {
+    max-height: 60px;
   }
   
   .form-group input,
