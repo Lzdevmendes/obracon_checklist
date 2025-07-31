@@ -4,6 +4,7 @@ import './App.css';
 import Login from './Login';
 import Dashboard from './Dashboard';
 import ChecklistPassoAPasso from './ChecklistPassoAPasso';
+import ChecklistHistory from './ChecklistHistory';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -31,6 +32,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard user={user} onLogout={handleLogout} />} />
           <Route path="/checklist-passoapasso" element={<ChecklistPassoAPasso />} />
+          <Route path="/historico" element={<ChecklistHistory />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>

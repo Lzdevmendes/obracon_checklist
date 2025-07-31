@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CameraCapture from './components/CameraCapture';
+import { saveChecklist } from './firebase/checklistService';
 import './ChecklistPassoAPasso.css';
 
 const ChecklistPassoAPasso = () => {
@@ -65,7 +66,7 @@ const ChecklistPassoAPasso = () => {
     setIsSubmitting(true);
 
     try {
-      // Aqui será implementada a integração com o banco de dados
+      // Preparar dados completos do checklist
       const checklistCompleto = {
         vehicleId,
         ...checklistData,
@@ -73,17 +74,18 @@ const ChecklistPassoAPasso = () => {
         timestamp: new Date().toISOString()
       };
 
-      console.log('Dados do checklist:', checklistCompleto);
+      console.log('Enviando checklist para Firebase:', checklistCompleto);
       
-      // Simulação de envio (será substituído pela integração real)
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Salvar no Firebase
+      const checklistId = await saveChecklist(checklistCompleto);
       
-      alert('Checklist enviado com sucesso!');
+      console.log('Checklist salvo com sucesso! ID:', checklistId);
+      alert('Checklist enviado e salvo com sucesso!');
       navigate('/');
       
     } catch (error) {
       console.error('Erro ao enviar checklist:', error);
-      alert('Erro ao enviar checklist. Tente novamente.');
+      alert('Erro ao enviar checklist: ' + error.message);
     } finally {
       setIsSubmitting(false);
     }

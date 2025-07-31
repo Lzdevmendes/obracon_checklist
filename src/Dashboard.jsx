@@ -43,6 +43,15 @@ const Dashboard = ({ user, onLogout }) => {
       </header>
 
       <main className="dashboard-main">
+        <div className="actions-bar">
+          <button
+            className="history-button"
+            onClick={() => navigate('/historico')}
+          >
+            📋 Ver Histórico de Checklists
+          </button>
+        </div>
+        
         <div className="table-container">
           <table className="vehicles-table">
             <thead>
