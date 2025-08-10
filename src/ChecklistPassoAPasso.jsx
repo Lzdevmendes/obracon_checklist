@@ -128,7 +128,6 @@ const ChecklistPassoAPasso = () => {
         >
           ← Voltar
         </button>
-        <h1>Checklist do Painel</h1>
       </header>
 
       <div className="checklist-content">
@@ -228,7 +227,7 @@ const ChecklistPassoAPasso = () => {
 
         {/* Checklist de itens */}
         <div className="checklist-items">
-          <h3>✅ Itens Verificados</h3>
+          <h3>✅Itens Verificados</h3>
           
           <div className="checkbox-group">
             <label className="checkbox-item">

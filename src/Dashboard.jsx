@@ -6,20 +6,20 @@ const Dashboard = ({ user, onLogout }) => {
   const navigate = useNavigate();
 
   const vehicles = [
-    { id: 1, veiculo: 'Saveiro Simples', placa: 'SUX-19E4', status: 'Funcionando', revisao: '15/01/2025' },
-    { id: 2, veiculo: 'Volkswagen Gol', placa: 'DEF-5678', status: 'Funcionando', revisao: '20/01/2025' },
-    { id: 3, veiculo: 'Chevrolet Onix', placa: 'GHI-9012', status: 'Manutenção', revisao: '10/02/2025' },
-    { id: 4, veiculo: 'Ford Ka', placa: 'JKL-3456', status: 'Funcionando', revisao: '25/01/2025' },
-    { id: 5, veiculo: 'Hyundai HB20', placa: 'MNO-7890', status: 'Funcionando', revisao: '30/01/2025' },
-    { id: 6, veiculo: 'Renault Sandero', placa: 'PQR-1357', status: 'Funcionando', revisao: '05/02/2025' },
-    { id: 7, veiculo: 'Fiat Argo', placa: 'STU-2468', status: 'Funcionando', revisao: '12/02/2025' },
-    { id: 8, veiculo: 'Toyota Etios', placa: 'VWX-9753', status: 'Funcionando', revisao: '18/02/2025' },
-    { id: 9, veiculo: 'Nissan March', placa: 'YZA-8642', status: 'Manutenção', revisao: '22/02/2025' },
-    { id: 10, veiculo: 'Peugeot 208', placa: 'BCD-1975', status: 'Funcionando', revisao: '28/02/2025' },
-    { id: 11, veiculo: 'Honda Fit', placa: 'EFG-3086', status: 'Funcionando', revisao: '05/03/2025' },
-    { id: 12, veiculo: 'Chevrolet Prisma', placa: 'HIJ-4197', status: 'Funcionando', revisao: '10/03/2025' },
-    { id: 13, veiculo: 'Volkswagen Voyage', placa: 'KLM-5208', status: 'Funcionando', revisao: '15/03/2025' },
-    { id: 14, veiculo: 'Fiat Mobi', placa: 'NOP-6319', status: 'Manutenção', revisao: '20/03/2025' }
+    { id: 1, veiculo: 'Montana', placa: 'SUX-9E46', status: 'Funcionando', revisao: '15/01/2025' },
+    { id: 2, veiculo: 'Strada', placa: 'FXX-3G05', status: 'Funcionando', revisao: '20/01/2025' },
+    { id: 3, veiculo: 'Fiorino', placa: 'CWV-5E10', status: 'Funcionando', revisao: '10/02/2025' },
+    { id: 4, veiculo: 'Polo', placa: 'FGK-2C31', status: 'Funcionando', revisao: '25/01/2025' },
+    { id: 5, veiculo: 'Polo', placa: 'FTW-1H64', status: 'Funcionando', revisao: '30/01/2025' },
+    { id: 6, veiculo: 'Bongo', placa: 'GDW-7C61', status: 'Funcionando', revisao: '05/02/2025' },
+    { id: 7, veiculo: 'Strada Dupla', placa: 'GHZ-6J35', status: 'Funcionando', revisao: '12/02/2025' },
+    { id: 8, veiculo: 'Strada Dupla', placa: 'GAX-4J52', status: 'Funcionando', revisao: '18/02/2025' },
+    { id: 9, veiculo: 'Saveiro Robust', placa: 'SWH-1I55', status: 'Funcionando', revisao: '22/02/2025' },
+    { id: 10, veiculo: 'Saveiro Simples', placa: 'SUX-8I75', status: 'Funcionando', revisao: '28/02/2025' },
+    { id: 11, veiculo: 'Montana', placa: 'SVV-7D93', status: 'Funcionando', revisao: '05/03/2025' },
+    { id: 12, veiculo: 'Saveiro Simples', placa: 'TJJ-7G92', status: 'Funcionando', revisao: '10/03/2025' },
+    { id: 13, veiculo: 'Saveiro Simples', placa: 'TLO-1E94', status: 'Funcionando', revisao: '15/03/2025' },
+    { id: 14, veiculo: 'Saveiro Simples', placa: 'TLW-3D89', status: 'Funcionando', revisao: '20/03/2025' }
   ];
 
   const handleSelectVehicle = (vehicleId) => {
